@@ -1,0 +1,37 @@
+# ninja log v6
+5	53	7836956240916160	sfml-populate-prefix/src/sfml-populate-stamp/sfml-populate-mkdir	6580f9115194010a
+13	2125	7836968882638642	D:/school vibes/T1 - 2025-2026/STDISCM/SFML/thirdparty/sfml-subbuild/sfml-populate-prefix/src/sfml-populate-stamp/sfml-populate-update	3bad77fe39061590
+53	25993	7836956500287545	sfml-populate-prefix/src/sfml-populate-stamp/sfml-populate-download	4cde3689b4a6afdf
+5	53	7836956240916160	D:/school vibes/T1 - 2025-2026/STDISCM/SFML/thirdparty/sfml-subbuild/sfml-populate-prefix/src/sfml-populate-stamp/sfml-populate-mkdir	6580f9115194010a
+13	2125	7836968882638642	sfml-populate-prefix/src/sfml-populate-stamp/sfml-populate-update	3bad77fe39061590
+2125	2173	7836968904315186	D:/school vibes/T1 - 2025-2026/STDISCM/SFML/thirdparty/sfml-subbuild/sfml-populate-prefix/src/sfml-populate-stamp/sfml-populate-patch	a69a14911df6263b
+53	25993	7836956500287545	D:/school vibes/T1 - 2025-2026/STDISCM/SFML/thirdparty/sfml-subbuild/sfml-populate-prefix/src/sfml-populate-stamp/sfml-populate-download	4cde3689b4a6afdf
+2125	2173	7836968904315186	sfml-populate-prefix/src/sfml-populate-stamp/sfml-populate-patch	a69a14911df6263b
+2173	2227	7836968904783185	sfml-populate-prefix/src/sfml-populate-stamp/sfml-populate-configure	41cea92ec5c5f316
+2173	2227	7836968904783185	D:/school vibes/T1 - 2025-2026/STDISCM/SFML/thirdparty/sfml-subbuild/sfml-populate-prefix/src/sfml-populate-stamp/sfml-populate-configure	41cea92ec5c5f316
+2227	2285	7836968905451578	sfml-populate-prefix/src/sfml-populate-stamp/sfml-populate-build	7da5f6cb99912467
+2227	2285	7836968905451578	D:/school vibes/T1 - 2025-2026/STDISCM/SFML/thirdparty/sfml-subbuild/sfml-populate-prefix/src/sfml-populate-stamp/sfml-populate-build	7da5f6cb99912467
+2285	2333	7836968905917503	sfml-populate-prefix/src/sfml-populate-stamp/sfml-populate-install	dfa5d9e956585e26
+2285	2333	7836968905917503	D:/school vibes/T1 - 2025-2026/STDISCM/SFML/thirdparty/sfml-subbuild/sfml-populate-prefix/src/sfml-populate-stamp/sfml-populate-install	dfa5d9e956585e26
+2333	2389	7836968906320254	sfml-populate-prefix/src/sfml-populate-stamp/sfml-populate-test	5875a58193968d4c
+2333	2389	7836968906320254	D:/school vibes/T1 - 2025-2026/STDISCM/SFML/thirdparty/sfml-subbuild/sfml-populate-prefix/src/sfml-populate-stamp/sfml-populate-test	5875a58193968d4c
+2389	2454	7836968907010320	CMakeFiles/sfml-populate-complete	6c3fa8ea48845d6a
+2389	2454	7836968907010320	sfml-populate-prefix/src/sfml-populate-stamp/sfml-populate-done	6c3fa8ea48845d6a
+2389	2454	7836968907010320	D:/school vibes/T1 - 2025-2026/STDISCM/SFML/thirdparty/sfml-subbuild/CMakeFiles/sfml-populate-complete	6c3fa8ea48845d6a
+2389	2454	7836968907010320	D:/school vibes/T1 - 2025-2026/STDISCM/SFML/thirdparty/sfml-subbuild/sfml-populate-prefix/src/sfml-populate-stamp/sfml-populate-done	6c3fa8ea48845d6a
+13	2084	7836968918505421	sfml-populate-prefix/src/sfml-populate-stamp/sfml-populate-update	3bad77fe39061590
+13	2084	7836968918505421	D:/school vibes/T1 - 2025-2026/STDISCM/SFML/thirdparty/sfml-subbuild/sfml-populate-prefix/src/sfml-populate-stamp/sfml-populate-update	3bad77fe39061590
+2084	2136	7836968939703213	sfml-populate-prefix/src/sfml-populate-stamp/sfml-populate-patch	a69a14911df6263b
+2084	2136	7836968939703213	D:/school vibes/T1 - 2025-2026/STDISCM/SFML/thirdparty/sfml-subbuild/sfml-populate-prefix/src/sfml-populate-stamp/sfml-populate-patch	a69a14911df6263b
+2137	2183	7836968940237246	sfml-populate-prefix/src/sfml-populate-stamp/sfml-populate-configure	41cea92ec5c5f316
+2137	2183	7836968940237246	D:/school vibes/T1 - 2025-2026/STDISCM/SFML/thirdparty/sfml-subbuild/sfml-populate-prefix/src/sfml-populate-stamp/sfml-populate-configure	41cea92ec5c5f316
+2184	2234	7836968940771449	sfml-populate-prefix/src/sfml-populate-stamp/sfml-populate-build	7da5f6cb99912467
+2184	2234	7836968940771449	D:/school vibes/T1 - 2025-2026/STDISCM/SFML/thirdparty/sfml-subbuild/sfml-populate-prefix/src/sfml-populate-stamp/sfml-populate-build	7da5f6cb99912467
+2234	2282	7836968941255757	sfml-populate-prefix/src/sfml-populate-stamp/sfml-populate-install	dfa5d9e956585e26
+2234	2282	7836968941255757	D:/school vibes/T1 - 2025-2026/STDISCM/SFML/thirdparty/sfml-subbuild/sfml-populate-prefix/src/sfml-populate-stamp/sfml-populate-install	dfa5d9e956585e26
+2282	2331	7836968941609134	sfml-populate-prefix/src/sfml-populate-stamp/sfml-populate-test	5875a58193968d4c
+2282	2331	7836968941609134	D:/school vibes/T1 - 2025-2026/STDISCM/SFML/thirdparty/sfml-subbuild/sfml-populate-prefix/src/sfml-populate-stamp/sfml-populate-test	5875a58193968d4c
+2332	2401	7836968942401882	CMakeFiles/sfml-populate-complete	6c3fa8ea48845d6a
+2332	2401	7836968942401882	sfml-populate-prefix/src/sfml-populate-stamp/sfml-populate-done	6c3fa8ea48845d6a
+2332	2401	7836968942401882	D:/school vibes/T1 - 2025-2026/STDISCM/SFML/thirdparty/sfml-subbuild/CMakeFiles/sfml-populate-complete	6c3fa8ea48845d6a
+2332	2401	7836968942401882	D:/school vibes/T1 - 2025-2026/STDISCM/SFML/thirdparty/sfml-subbuild/sfml-populate-prefix/src/sfml-populate-stamp/sfml-populate-done	6c3fa8ea48845d6a
