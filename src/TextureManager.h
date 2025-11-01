@@ -28,7 +28,7 @@ private:
 	TextureManager(TextureManager const&) {};             // copy constructor is private
 	TextureManager& operator=(TextureManager const&) {};  // assignment operator is private
 	static TextureManager* sharedInstance;
-
+	int totalTilesLoaded; // [ADDED] counts how many textures (tiles) are loaded
 	HashTable textureMap;
 	TextureList baseTextureList;
 	TextureList streamTextureList;
