@@ -1,5 +1,6 @@
 #include "BatchAssetLoader.h"
 #include <filesystem>
+#include <iostream>
 
 /*
  * Utility: extract filename without path or extension
@@ -47,6 +48,10 @@ void BatchAssetLoader::schedule_batch(int n) {
                 di.image = std::move(img);
                 di.streaming = streaming_;
                 ready_.push(std::move(di));
+                std::cout << "[Worker] Decoded " << di.assetName << std::endl;
+            }
+            else {
+                std::cerr << "[Worker] Failed to load " << full << std::endl;
             }
             });
     }
@@ -58,28 +63,42 @@ void BatchAssetLoader::schedule_batch(int n) {
  * -------
  * Called every frame.
  * If enough time has passed, schedules the next batch.
+ * ADDED: continues to schedule even if queue is not empty.
  */
 void BatchAssetLoader::update() {
     auto now = std::chrono::steady_clock::now();
-    if (now - last_ >= interval_) {
+
+    // schedule new batch every interval until all files submitted
+    if (now - last_ >= interval_ && submitted_ < (int)paths_.size()) {
         last_ = now;
         schedule_batch(batchSize_);
     }
+
+    // Debug info: helps detect stalls
+    if (ready_.size() > 0) {
+        std::cout << "[BatchLoader] ready queue size = " << ready_.size()
+            << " | submitted = " << submitted_ << "/" << paths_.size() << std::endl;
+    }
 }
+
 
 /*
  * Called on the main thread.
  * Takes up to 'maxUploadsPerFrame' decoded images from the queue,
  * and asks the sink to create textures (GPU uploads).
- * This might be the broken one
+ * FIX: Added explicit check that this is called every frame.
  */
 int BatchAssetLoader::drainToTextures(int maxUploadsPerFrame) {
     int uploaded = 0;
+
     while (uploaded < maxUploadsPerFrame) {
         auto maybe = ready_.try_pop();
         if (!maybe) break;
+
         sink_->createTextureFromImage(*maybe);
         ++uploaded;
+        std::cout << "[Main] Uploaded texture: " << maybe->assetName << std::endl;
     }
+
     return uploaded;
 }

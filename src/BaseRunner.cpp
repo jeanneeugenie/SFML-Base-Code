@@ -10,11 +10,6 @@
 #include "TextureSink.h"
 #include <filesystem>
 
-// --------------------------------------------------------------
-// Demonstrates a running parallax background where after X seconds,
-// a batch of assets will be streamed and loaded on worker threads.
-// --------------------------------------------------------------
-
 const sf::Time BaseRunner::TIME_PER_FRAME = sf::seconds(1.f / 60.f);
 
 // globals owned by BaseRunner

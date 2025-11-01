@@ -133,14 +133,23 @@ void TextureManager::instantiateAsTexture(String path, String assetName, bool is
 bool TextureManager::instantiateFromImage(const std::string& assetName,
 	const sf::Image& img,
 	bool isStreaming) {
-	auto tex = new sf::Texture();
-	if (!tex->loadFromImage(img)) {
-		delete tex;
+	try {
+		auto tex = new sf::Texture();
+		if (!tex->loadFromImage(img)) {
+			std::cerr << "[TextureManager] Failed GPU upload for " << assetName << "\n";
+			delete tex;
+			return false;
+		}
+
+		TextureList& bucket = isStreaming ? this->streamTextureList : this->baseTextureList;
+		this->textureMap[assetName].push_back(tex);
+		bucket.push_back(tex);
+		return true;
+	}
+	catch (const std::exception& e) {
+		std::cerr << "[TextureManager] Exception uploading " << assetName
+			<< ": " << e.what() << "\n";
 		return false;
 	}
-
-	TextureList& bucket = isStreaming ? this->streamTextureList : this->baseTextureList;
-	this->textureMap[assetName].push_back(tex);
-	bucket.push_back(tex);
-	return true;
 }
+
