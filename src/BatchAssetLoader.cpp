@@ -75,7 +75,7 @@ void BatchAssetLoader::update() {
         schedule_batch(batchSize_);
 
         // --- OPTIONAL: demo delay between batches so you can see the cadence ---
-        std::this_thread::sleep_for(std::chrono::milliseconds(300));
+        std::this_thread::sleep_for(std::chrono::milliseconds(200));
         // ----------------------------------------------------------------------
 
         // Reset the interval timer
@@ -83,10 +83,10 @@ void BatchAssetLoader::update() {
     }
 
     // (Optional) debug: show queue size
-    // if (ready_.size() > 0) {
-    //     std::cout << "[BatchLoader] ready queue size = " << ready_.size()
-    //               << " | submitted = " << submitted_ << "/" << paths_.size() << std::endl;
-    // }
+     if (ready_.size() > 0) {
+         std::cout << "[BatchLoader] ready queue size = " << ready_.size()
+                   << " | submitted = " << submitted_ << "/" << paths_.size() << std::endl;
+    }
 }
 
 
