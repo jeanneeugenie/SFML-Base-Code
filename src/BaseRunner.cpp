@@ -18,7 +18,7 @@ std::unique_ptr<BatchAssetLoader> g_loader;
 TextureSink g_sink;
 
 // --- adaptive upload limiter state ---
-static int   g_maxUploadsPerFrame = 10;   // starts at 10; will adapt to stay over 50 FPS
+static int   g_maxUploadsPerFrame = 8;   // initally 10, but 8 seems to work well and it will adapt to stay over 50 FPS
 static float g_fpsEMA = 60.f; // simple smoothing of fps (exponential moving avg)
 static const float FPS_TARGET_MIN = 50.f; // never drop below this (according to sir, this is the best number)
 static const float FPS_RELAX_HIGH = 57.f; // if we’re above this, we can afford to upload faster
@@ -61,7 +61,7 @@ BaseRunner::BaseRunner() :
         &g_sink,
         streamingFiles,
         /*batchSize*/ 50,
-        /*intervalMs*/ 120,
+        /*intervalMs*/ 300, //changing the time here allowed for some spacing?
         /*workerThreads*/ 4,
         /*streaming*/ true
     );

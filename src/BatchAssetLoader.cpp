@@ -75,7 +75,7 @@ void BatchAssetLoader::update() {
         schedule_batch(batchSize_);
 
         // --- OPTIONAL: demo delay between batches so you can see the cadence ---
-        std::this_thread::sleep_for(std::chrono::milliseconds(200));
+        //std::this_thread::sleep_for(std::chrono::milliseconds(5));
         // ----------------------------------------------------------------------
 
         // Reset the interval timer
