@@ -11,25 +11,26 @@
 #include <filesystem>
 #include <iostream>
 
+// ------------------------------------------------------------------
 const sf::Time BaseRunner::TIME_PER_FRAME = sf::seconds(1.f / 60.f);
 
-// globals owned by BaseRunner
 std::unique_ptr<BatchAssetLoader> g_loader;
 TextureSink g_sink;
 
-// --- adaptive upload limiter state ---
-static int   g_maxUploadsPerFrame = 8;   // initally 10, but 8 seems to work well and it will adapt to stay over 50 FPS
-static float g_fpsEMA = 60.f; // simple smoothing of fps (exponential moving avg)
-static const float FPS_TARGET_MIN = 50.f; // never drop below this (according to sir, this is the best number)
-static const float FPS_RELAX_HIGH = 57.f; // if we’re above this, we can afford to upload faster
+// --- Small UI toast for batch notifications (file-static) ---
+static sf::Font   g_toastFont;
+static sf::Text   g_toastText;
+static sf::Clock  g_toastClock;
+static int        g_lastShownBatch = -1;
+// ------------------------------------------------------------------
 
 BaseRunner::BaseRunner() :
     window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT),
         "HO: Entity Component", sf::Style::Close)
 {
-    // Optional but helps stabilize
-    // window.setVerticalSyncEnabled(true);
-    // window.setFramerateLimit(60);
+    // Cap render FPS to ~120 so the counter isn't in the 300s
+    window.setVerticalSyncEnabled(false);
+    window.setFramerateLimit(120);
 
     // 1) Synchronous base assets
     TextureManager::getInstance()->loadFromAssetList();
@@ -38,7 +39,7 @@ BaseRunner::BaseRunner() :
     auto* bgObject = new BGObject("BGObject");
     GameObjectManager::getInstance()->addObject(bgObject);
 
-    auto* display = new TextureDisplay();       // <-- dynamic grid (see below)
+    auto* display = new TextureDisplay();
     GameObjectManager::getInstance()->addObject(display);
 
     auto* fpsCounter = new FPSCounter();
@@ -46,25 +47,41 @@ BaseRunner::BaseRunner() :
 
     // 3) Gather streaming files
     std::vector<std::string> streamingFiles;
-    for (auto& entry : std::filesystem::directory_iterator("Media/Streaming"))
-    {
+    for (auto& entry : std::filesystem::directory_iterator("Media/Streaming")) {
         if (!entry.is_regular_file()) continue;
         auto path = entry.path().string();
         if (path.ends_with(".png") || path.ends_with(".jpg"))
             streamingFiles.push_back(path);
     }
 
-    // 4) Init batch loader (15 per batch every 120ms; 4 workers)
-    // 15 for testing will adjust for 50 later on
-    // the thing lags at 15 making it 50 will :"D
+    // Loader: try batchSize=15 or 50 with interval 120–250 ms
     g_loader = std::make_unique<BatchAssetLoader>(
         &g_sink,
         streamingFiles,
         /*batchSize*/ 50,
-        /*intervalMs*/ 120, //changing the time here allowed for some spacing?
+        /*intervalMs*/ 200,  // slightly longer to make batches visually distinct
         /*workerThreads*/ 4,
         /*streaming*/ true
     );
+
+    // --- Initialize toast UI (top-left) ---
+    g_toastFont.loadFromFile("Media/Sansation.ttf");
+    g_toastText.setFont(g_toastFont);
+    g_toastText.setCharacterSize(22);
+    g_toastText.setFillColor(sf::Color::White);
+    g_toastText.setOutlineColor(sf::Color::Black);
+    g_toastText.setOutlineThickness(2.f);
+    g_toastText.setPosition(12.f, 10.f);
+    g_toastText.setString("");
+
+    // Show a toast briefly when uploads from a new batch arrive
+    g_loader->setOnUpload([](int batchId) {
+        if (batchId > g_lastShownBatch) {
+            g_lastShownBatch = batchId;
+            g_toastText.setString("Batch " + std::to_string(batchId) + " uploading...");
+            g_toastClock.restart();
+        }
+        });
 
     std::cout << "[BaseRunner] Streaming files: " << streamingFiles.size() << "\n";
 }
@@ -79,14 +96,12 @@ void BaseRunner::run()
         sf::Time elapsedTime = clock.restart();
         timeSinceLastUpdate += elapsedTime;
 
-        // fixed timestep update
         while (timeSinceLastUpdate > TIME_PER_FRAME)
         {
             timeSinceLastUpdate -= TIME_PER_FRAME;
             processEvents();
             update(elapsedTime);
         }
-
         render();
     }
 }
@@ -94,14 +109,12 @@ void BaseRunner::run()
 void BaseRunner::processEvents()
 {
     sf::Event event;
-    while (this->window.pollEvent(event)) // handle all queued events
+    while (this->window.pollEvent(event))
     {
-        if (event.type == sf::Event::Closed) {
+        if (event.type == sf::Event::Closed)
             this->window.close();
-        }
-        else {
+        else
             GameObjectManager::getInstance()->processInput(event);
-        }
     }
 }
 
@@ -109,24 +122,9 @@ void BaseRunner::update(sf::Time elapsedTime)
 {
     GameObjectManager::getInstance()->update(elapsedTime);
 
-    // --- Adaptive limiter based on FPS ---
-    float instFPS = (elapsedTime.asSeconds() > 0.f) ? (1.f / elapsedTime.asSeconds()) : 1000.f;
-    // EMA smoothing
-    g_fpsEMA = 0.90f * g_fpsEMA + 0.10f * instFPS;
-
-    // If FPS dips, back off uploads; if it’s comfy, increase a bit.
-    if (g_fpsEMA < FPS_TARGET_MIN && g_maxUploadsPerFrame > 1) {
-        g_maxUploadsPerFrame = std::max(1, g_maxUploadsPerFrame - 1);
-    }
-    else if (g_fpsEMA > FPS_RELAX_HIGH && g_maxUploadsPerFrame < 50) {
-        g_maxUploadsPerFrame = std::min(50, g_maxUploadsPerFrame + 1);
-    }
-
-    // run batch loader every frame
-    if (g_loader)
-    {
-        g_loader->update(); // schedules new background decodes
-        g_loader->drainToTextures(g_maxUploadsPerFrame); // uploads a limited amount per frame
+    if (g_loader) {
+        g_loader->update();                // schedules batches on timer
+        g_loader->drainToTextures(10);     // uploads per frame (tune 6–20)
     }
 }
 
@@ -134,5 +132,11 @@ void BaseRunner::render()
 {
     this->window.clear();
     GameObjectManager::getInstance()->draw(&this->window);
+
+    // Draw batch toast for ~0.6s after a new batch starts uploading
+    if (g_toastClock.getElapsedTime().asSeconds() < 0.6f) {
+        this->window.draw(g_toastText);
+    }
+
     this->window.display();
 }

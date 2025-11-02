@@ -1,7 +1,9 @@
 #include "BatchAssetLoader.h"
 #include <filesystem>
 #include <iostream>
+#include <thread>
 #include <random>
+
 /*
  * Utility: extract filename without path or extension
  * just makes the printing part in cmdprompt neater
@@ -35,17 +37,24 @@ BatchAssetLoader::BatchAssetLoader(ITextureSink* sink,
  * Submits up to N new jobs to the thread pool.
  * Each job decodes one image using sf::Image (CPU side).
  */
-static thread_local std::mt19937 rng{ std::random_device{}() };
-
 void BatchAssetLoader::schedule_batch(int n) {
+    const int currentBatch = nextBatchId_++;          // NEW: tag all items in this batch
     int end = std::min(submitted_ + n, (int)paths_.size());
+
+    // Optional: visible console marker per batch
+    std::cout << "=== Schedule Batch " << currentBatch
+        << " (" << (end - submitted_) << " items) ===\n";
+
+    // Per-file demo latency RNG (safe: worker threads only)
+    static thread_local std::mt19937 rng{ std::random_device{}() };
+    std::uniform_int_distribution<int> demoDelayMs(120, 240); // tweak if you want
+
     for (int i = submitted_; i < end; ++i) {
         std::string full = paths_[i];
-        pool_.enqueue([this, full] {
-            // --- demo-only latency: 120–240 ms per file, on worker thread ---
-            std::uniform_int_distribution<int> ms(120, 240);
-            std::this_thread::sleep_for(std::chrono::milliseconds(ms(rng)));
-            // ----------------------------------------------------------------
+        pool_.enqueue([this, full, currentBatch, demoDelay = demoDelayMs(rng)] {
+            // --- demo-only delay; REMOVE for real benchmarks if desired ---
+            std::this_thread::sleep_for(std::chrono::milliseconds(demoDelay));
+            // ---------------------------------------------------------------
 
             sf::Image img;
             if (img.loadFromFile(full)) {
@@ -54,8 +63,10 @@ void BatchAssetLoader::schedule_batch(int n) {
                 di.assetName = stem_from_filename(full);
                 di.image = std::move(img);
                 di.streaming = streaming_;
+                di.batchId = currentBatch;           // NEW: preserve batch ID
                 ready_.push(std::move(di));
-                std::cout << "[Worker] Decoded " << di.assetName << "\n";
+                std::cout << "[Worker] Decoded " << di.assetName
+                    << " (batch " << currentBatch << ")\n";
             }
             else {
                 std::cerr << "[Worker] Failed to load " << full << "\n";
@@ -68,9 +79,7 @@ void BatchAssetLoader::schedule_batch(int n) {
 /*
  * update
  * -------
- * Called every frame.
- * If enough time has passed, schedules the next batch.
- * ADDED: continues to schedule even if queue is not empty.
+ * Called every frame from the main thread. Never blocks.
  */
 void BatchAssetLoader::update() {
     auto now = std::chrono::steady_clock::now();
@@ -79,19 +88,20 @@ void BatchAssetLoader::update() {
 
     if (now - last_ >= interval_ && submitted_ < (int)paths_.size()) {
         schedule_batch(batchSize_);
-        last_ = std::chrono::steady_clock::now(); // reset timer
+        last_ = std::chrono::steady_clock::now();
     }
 
-    // (optional) debug
-    // if (ready_.size() > 0) { std::cout << "[ready]=" << ready_.size() << "\n"; }
+    // (Optional) debug:
+     if (ready_.size() > 0)
+         std::cout << "[BatchLoader] ready=" << ready_.size()
+                   << " submitted=" << submitted_ << "/" << paths_.size() << "\n";
 }
 
-
 /*
- * Called on the main thread.
- * Takes up to 'maxUploadsPerFrame' decoded images from the queue,
- * and asks the sink to create textures (GPU uploads).
- * FIX: Added explicit check that this is called every frame.
+ * drainToTextures
+ * ----------------
+ * Main-thread: upload limited number of textures to GPU per frame.
+ * Notifies UI via onUpload_ with the batchId of each uploaded item.
  */
 int BatchAssetLoader::drainToTextures(int maxUploadsPerFrame) {
     int uploaded = 0;
@@ -101,9 +111,12 @@ int BatchAssetLoader::drainToTextures(int maxUploadsPerFrame) {
         if (!maybe) break;
 
         sink_->createTextureFromImage(*maybe);
-        ++uploaded;
-        std::cout << "[Main] Uploaded texture: " << maybe->assetName << std::endl;
-    }
 
+        if (onUpload_) onUpload_(maybe->batchId);   // NEW: notify UI/overlay
+
+        ++uploaded;
+        std::cout << "[Main] Uploaded: " << maybe->assetName
+            << " (batch " << maybe->batchId << ")\n";
+    }
     return uploaded;
 }
