@@ -46,9 +46,9 @@ add_executable (SFML ${PROJ_SRC} "SFML-Base.cpp" "SFML-Base.h" "src/LoadAssetThr
 #add_executable (SFML ${PROJ_SRC} "test.cpp" "SFML-Base.h" "src/LoadAssetThread.h")
 
 #if (MSVC)
- #   target_compile_options(SFML PRIVATE /std:c++20 /Zc:__cplusplus)
+    target_compile_options(SFML PRIVATE /std:c++20 /Zc:__cplusplus)
 #else()
- #   target_compile_options(SFML PRIVATE -std=c++20)
+    target_compile_options(SFML PRIVATE -std=c++20)
 #endif()
 
 set(CMAKE_CXX_STANDARD 20)               # Force C++20

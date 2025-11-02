@@ -68,18 +68,27 @@ void BatchAssetLoader::schedule_batch(int n) {
 void BatchAssetLoader::update() {
     auto now = std::chrono::steady_clock::now();
 
-    // schedule new batch every interval until all files submitted
+    // Only schedule if the interval has elapsed and there are still files to submit
     if (now - last_ >= interval_ && submitted_ < (int)paths_.size()) {
-        last_ = now;
+
+        // Schedule the next batch of image decode tasks
         schedule_batch(batchSize_);
+
+        // --- OPTIONAL: demo delay between batches so you can see the cadence ---
+        std::this_thread::sleep_for(std::chrono::milliseconds(300));
+        // ----------------------------------------------------------------------
+
+        // Reset the interval timer
+        last_ = std::chrono::steady_clock::now();
     }
 
-    // Debug info: helps detect stalls
-    if (ready_.size() > 0) {
-        std::cout << "[BatchLoader] ready queue size = " << ready_.size()
-            << " | submitted = " << submitted_ << "/" << paths_.size() << std::endl;
-    }
+    // (Optional) debug: show queue size
+    // if (ready_.size() > 0) {
+    //     std::cout << "[BatchLoader] ready queue size = " << ready_.size()
+    //               << " | submitted = " << submitted_ << "/" << paths_.size() << std::endl;
+    // }
 }
+
 
 
 /*

@@ -5,6 +5,7 @@
 #include <chrono>
 #include "ThreadPool.h"
 #include "ConcurrentQueue.h"
+#include <SFML/System/Clock.hpp>
 
 /*
  * Represents an image fully loaded and decoded in memory (CPU side).
@@ -52,6 +53,7 @@ private:
     void schedule_batch(int n);
 
     ITextureSink* sink_;
+    sf::Clock clock_;
     std::vector<std::string> paths_;
     const int batchSize_;
     const std::chrono::milliseconds interval_;

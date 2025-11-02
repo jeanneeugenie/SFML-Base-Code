@@ -19,6 +19,9 @@ public:
 	void loadSingleStreamAsset(int index); //loads a single streaming asset based on index in directory
 	sf::Texture* getFromTextureMap(const String assetName, int frameIndex);
 	int getNumFrames(const String assetName);
+	// Returns the current list of loaded streaming textures.
+	// This allows progress tracking or debugging.
+	const TextureList& getStreamingTextureList() const;
 
 	sf::Texture* getStreamTextureFromList(const int index);
 	int getNumLoadedStreamTextures() const;

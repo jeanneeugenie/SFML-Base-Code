@@ -1,89 +1,66 @@
 #include "TextureDisplay.h"
-#include <iostream>
 #include "TextureManager.h"
-#include "BaseRunner.h"
-#include "GameObjectManager.h"
-#include "IconObject.h"
-#include <filesystem>  // add this if not present
+#include <algorithm>
 
-TextureDisplay::TextureDisplay(): AGameObject("TextureDisplay")
-{
-	
+static constexpr int   GRID_COLS = 25;
+static constexpr float TILE_SIZE = 64.f;
+static constexpr float TILE_PAD = 4.f;
+static const sf::Vector2f GRID_ORIGIN(16.f, 40.f);
+
+static inline void fitSpriteToTile(sf::Sprite& spr, float tileSize = TILE_SIZE) {
+    const sf::Texture* tex = spr.getTexture();
+    if (!tex) return;
+    sf::Vector2u sz = tex->getSize();
+    if (sz.x == 0 || sz.y == 0) return;
+    float s = tileSize / static_cast<float>(std::max(sz.x, sz.y));
+    spr.setScale(s, s);
 }
 
-void TextureDisplay::initialize()
-{
-	
+TextureDisplay::TextureDisplay() : AGameObject("TextureDisplay") {}
+
+TextureDisplay::~TextureDisplay() {
+    for (auto* s : icons) delete s;
+    icons.clear();
 }
 
-void TextureDisplay::processInput(sf::Event event)
-{
-	
+void TextureDisplay::initialize() {
+    // start empty; sprites are appended as textures arrive
 }
 
-void TextureDisplay::update(sf::Time deltaTime)
-{
-	this->ticks += BaseRunner::TIME_PER_FRAME.asMilliseconds();
+void TextureDisplay::processInput(sf::Event) {}
 
-	//<code here for spawning icon object periodically>
-	 // Start streaming after a delay so the background/UI appear first
-	if (!this->startedStreaming && this->ticks >= this->STREAMING_LOAD_DELAY) {
-		this->startedStreaming = true;
-		this->ticks = 0.0f; // reset if you want to pace spawning by time later
-	}
-
-	if (!this->startedStreaming) return;
-
-	// Compute total streamable assets once
-	static int totalStreamAssets = -1;
-	if (totalStreamAssets < 0) {
-		totalStreamAssets = 0;
-		for (const auto& _ : std::filesystem::directory_iterator("Media/Streaming/")) {
-			(void)_; // silence unused warning
-			totalStreamAssets++;
-		}
-	}
-
-	// Stream one icon per update (simple & smooth)
-	int loaded = TextureManager::getInstance()->getNumLoadedStreamTextures();
-	if (loaded < totalStreamAssets) {
-		TextureManager::getInstance()->loadSingleStreamAsset(loaded);
-		this->spawnObject();
-	}
-
-	ticks += deltaTime.asMilliseconds();
-
-	/*if (ticks > STREAMING_LOAD_DELAY) {
-		int texCount = TextureManager::getInstance()->getNumLoadedStreamTextures();
-
-		if (texCount < 200) {
-			LoadAssetThread* asset = new LoadAssetThread(TexCount, this);
-			asset->start();
-		}
-
-		ticks = 0;
-	}*/
+void TextureDisplay::update(sf::Time) {
+    addNewSpritesIfAny();
 }
 
-void TextureDisplay::spawnObject()
+void TextureDisplay::draw(sf::RenderWindow* targetWindow) {
+    AGameObject::draw(targetWindow);
+    for (auto* s : icons) targetWindow->draw(*s);
+}
+
+void TextureDisplay::addNewSpritesIfAny()
 {
-	String objectName = "Icon_" + to_string(this->iconList.size());
-	IconObject* iconObj = new IconObject(objectName, this->iconList.size());
-	this->iconList.push_back(iconObj);
+    TextureManager* tm = TextureManager::getInstance();
+    const size_t available = static_cast<size_t>(tm->getNumLoadedStreamTextures());
 
-	//set position
-	int IMG_WIDTH = 68; int IMG_HEIGHT = 68;
-	float x = this->columnGrid * IMG_WIDTH;
-	float y = this->rowGrid * IMG_HEIGHT;
-	iconObj->setPosition(x, y);
+    while (mirroredCount < available) {
+        sf::Texture* tex = tm->getStreamTextureFromList(static_cast<int>(mirroredCount));
+        if (!tex) break;
 
-	std::cout << "Set position: " << x << " " << y << std::endl;
+        auto* spr = new sf::Sprite(*tex);
+        fitSpriteToTile(*spr);
+        icons.push_back(spr);
 
-	this->columnGrid++;
-	if(this->columnGrid == this->MAX_COLUMN)
-	{
-		this->columnGrid = 0;
-		this->rowGrid++;
-	}
-	GameObjectManager::getInstance()->addObject(iconObj);
+        layoutSpriteAtIndex(mirroredCount);
+        ++mirroredCount;
+    }
+}
+
+void TextureDisplay::layoutSpriteAtIndex(size_t idx)
+{
+    const int col = static_cast<int>(idx % GRID_COLS);
+    const int row = static_cast<int>(idx / GRID_COLS);
+    const float x = GRID_ORIGIN.x + col * (TILE_SIZE + TILE_PAD);
+    const float y = GRID_ORIGIN.y + row * (TILE_SIZE + TILE_PAD);
+    icons[idx]->setPosition(x, y);
 }

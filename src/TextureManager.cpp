@@ -112,20 +112,18 @@ void TextureManager::countStreamingAssets()
 
 void TextureManager::instantiateAsTexture(String path, String assetName, bool isStreaming)
 {
-	sf::Texture* texture = new sf::Texture();
-	texture->loadFromFile(path);
+	auto* texture = new sf::Texture();
+	if (!texture->loadFromFile(path)) {
+		std::cerr << "[TextureManager] ERROR loading " << path << "\n";
+		delete texture;
+		return;
+	}
 	this->textureMap[assetName].push_back(texture);
 
-	if(isStreaming)
-	{
-		this->streamTextureList.push_back(texture);
-	}
-	else
-	{
-		this->baseTextureList.push_back(texture);
-	}
-	
+	if (isStreaming) this->streamTextureList.push_back(texture);
+	else             this->baseTextureList.push_back(texture);
 }
+
 /*
  * Called by TextureSink on the main thread to create a GPU texture
  * from an sf::Image decoded on a background thread.
@@ -153,3 +151,12 @@ bool TextureManager::instantiateFromImage(const std::string& assetName,
 	}
 }
 
+/*
+ * getStreamingTextureList
+ * -----------------------
+ * Returns a reference to the vector that stores currently loaded streaming textures.
+ * This allows the main loop (BaseRunner) to monitor how many have been uploaded so far.
+ */
+const TextureManager::TextureList& TextureManager::getStreamingTextureList() const {
+	return this->streamTextureList;
+}

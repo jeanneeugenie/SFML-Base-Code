@@ -1,33 +1,29 @@
 #pragma once
 #include "AGameObject.h"
+#include <vector>
+#include <SFML/Graphics.hpp>
 
-class IconObject;
-/// <summary>
-/// Class that deals with displaying of streamed textures
-/// </summary>
-class TextureDisplay: public AGameObject
+/*
+ * TextureDisplay
+ * Dynamically mirrors streaming textures into a 15-column grid.
+ */
+class TextureDisplay : public AGameObject
 {
 public:
-	TextureDisplay();
-	void initialize();
-	void processInput(sf::Event event);
-	void update(sf::Time deltaTime);
+    TextureDisplay();
+    ~TextureDisplay() override;
+
+    // Signatures EXACTLY match AGameObject
+    void initialize() override;
+    void processInput(sf::Event event) override;
+    void update(sf::Time deltaTime) override;
+    void draw(sf::RenderWindow* targetWindow) override;
 
 private:
-	typedef std::vector<IconObject*> IconList;
-	IconList iconList;
+    void addNewSpritesIfAny();
+    void layoutSpriteAtIndex(size_t idx);
 
-	enum StreamingType { BATCH_LOAD = 0, SINGLE_STREAM = 1 };
-	const float STREAMING_LOAD_DELAY = 200.0f;
-	const StreamingType streamingType = SINGLE_STREAM;
-	float ticks = 0.0f;
-	bool startedStreaming = false;
-
-	int columnGrid = 0; int rowGrid = 0;
-	
-	const int MAX_COLUMN = 24;
-	const int MAX_ROW = 22;
-
-	void spawnObject();
+private:
+    std::vector<sf::Sprite*> icons;
+    size_t mirroredCount = 0;
 };
-
