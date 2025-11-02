@@ -61,7 +61,7 @@ BaseRunner::BaseRunner() :
         &g_sink,
         streamingFiles,
         /*batchSize*/ 50,
-        /*intervalMs*/ 300, //changing the time here allowed for some spacing?
+        /*intervalMs*/ 120, //changing the time here allowed for some spacing?
         /*workerThreads*/ 4,
         /*streaming*/ true
     );

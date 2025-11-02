@@ -1,7 +1,7 @@
 #include "BatchAssetLoader.h"
 #include <filesystem>
 #include <iostream>
-
+#include <random>
 /*
  * Utility: extract filename without path or extension
  * just makes the printing part in cmdprompt neater
@@ -35,11 +35,18 @@ BatchAssetLoader::BatchAssetLoader(ITextureSink* sink,
  * Submits up to N new jobs to the thread pool.
  * Each job decodes one image using sf::Image (CPU side).
  */
+static thread_local std::mt19937 rng{ std::random_device{}() };
+
 void BatchAssetLoader::schedule_batch(int n) {
     int end = std::min(submitted_ + n, (int)paths_.size());
     for (int i = submitted_; i < end; ++i) {
         std::string full = paths_[i];
         pool_.enqueue([this, full] {
+            // --- demo-only latency: 120–240 ms per file, on worker thread ---
+            std::uniform_int_distribution<int> ms(120, 240);
+            std::this_thread::sleep_for(std::chrono::milliseconds(ms(rng)));
+            // ----------------------------------------------------------------
+
             sf::Image img;
             if (img.loadFromFile(full)) {
                 DecodedImage di;
@@ -48,10 +55,10 @@ void BatchAssetLoader::schedule_batch(int n) {
                 di.image = std::move(img);
                 di.streaming = streaming_;
                 ready_.push(std::move(di));
-                std::cout << "[Worker] Decoded " << di.assetName << std::endl;
+                std::cout << "[Worker] Decoded " << di.assetName << "\n";
             }
             else {
-                std::cerr << "[Worker] Failed to load " << full << std::endl;
+                std::cerr << "[Worker] Failed to load " << full << "\n";
             }
             });
     }
@@ -68,27 +75,16 @@ void BatchAssetLoader::schedule_batch(int n) {
 void BatchAssetLoader::update() {
     auto now = std::chrono::steady_clock::now();
 
-    // Only schedule if the interval has elapsed and there are still files to submit
+    //removing sleep but having like a timer to make it work
+
     if (now - last_ >= interval_ && submitted_ < (int)paths_.size()) {
-
-        // Schedule the next batch of image decode tasks
         schedule_batch(batchSize_);
-
-        // --- OPTIONAL: demo delay between batches so you can see the cadence ---
-        //std::this_thread::sleep_for(std::chrono::milliseconds(5));
-        // ----------------------------------------------------------------------
-
-        // Reset the interval timer
-        last_ = std::chrono::steady_clock::now();
+        last_ = std::chrono::steady_clock::now(); // reset timer
     }
 
-    // (Optional) debug: show queue size
-     if (ready_.size() > 0) {
-         std::cout << "[BatchLoader] ready queue size = " << ready_.size()
-                   << " | submitted = " << submitted_ << "/" << paths_.size() << std::endl;
-    }
+    // (optional) debug
+    // if (ready_.size() > 0) { std::cout << "[ready]=" << ready_.size() << "\n"; }
 }
-
 
 
 /*
