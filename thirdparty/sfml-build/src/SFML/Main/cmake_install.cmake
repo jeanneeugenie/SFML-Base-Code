@@ -1,8 +1,8 @@
-# Install script for directory: D:/school vibes/T1 - 2025-2026/STDISCM/SFML/thirdparty/sfml-src/src/SFML/Main
+# Install script for directory: C:/Users/josh/Documents/SCHOOL/STDISCM/P2/thirdparty/sfml-src/src/SFML/Main
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "D:/school vibes/T1 - 2025-2026/STDISCM/SFML/out/install/x64-debug")
+  set(CMAKE_INSTALL_PREFIX "C:/Users/josh/Documents/SCHOOL/STDISCM/P2/out/install/x64-debug")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -33,12 +33,12 @@ if(NOT DEFINED CMAKE_CROSSCOMPILING)
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "devel" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY FILES "D:/school vibes/T1 - 2025-2026/STDISCM/SFML/thirdparty/sfml-build/lib/sfml-main-d.lib")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY FILES "C:/Users/josh/Documents/SCHOOL/STDISCM/P2/thirdparty/sfml-build/lib/sfml-main-d.lib")
 endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
 if(CMAKE_INSTALL_LOCAL_ONLY)
-  file(WRITE "D:/school vibes/T1 - 2025-2026/STDISCM/SFML/thirdparty/sfml-build/src/SFML/Main/install_local_manifest.txt"
+  file(WRITE "C:/Users/josh/Documents/SCHOOL/STDISCM/P2/thirdparty/sfml-build/src/SFML/Main/install_local_manifest.txt"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
 endif()

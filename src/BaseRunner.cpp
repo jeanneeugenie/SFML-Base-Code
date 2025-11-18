@@ -58,8 +58,8 @@ BaseRunner::BaseRunner() :
     g_loader = std::make_unique<BatchAssetLoader>(
         &g_sink,
         streamingFiles,
-        /*batchSize*/ 50,
-        /*intervalMs*/ 200,  // slightly longer to make batches visually distinct
+        /*batchSize*/ 60,
+        /*intervalMs*/ 120,  // slightly longer to make batches visually distinct
         /*workerThreads*/ 4,
         /*streaming*/ true
     );

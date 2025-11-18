@@ -1,8 +1,8 @@
-# Install script for directory: D:/school vibes/T1 - 2025-2026/STDISCM/SFML/thirdparty/sfml-src/src/SFML
+# Install script for directory: C:/Users/josh/Documents/SCHOOL/STDISCM/P2/thirdparty/sfml-src/src/SFML
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "D:/school vibes/T1 - 2025-2026/STDISCM/SFML/out/install/x64-debug")
+  set(CMAKE_INSTALL_PREFIX "C:/Users/josh/Documents/SCHOOL/STDISCM/P2/out/install/x64-debug")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -34,18 +34,18 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("D:/school vibes/T1 - 2025-2026/STDISCM/SFML/thirdparty/sfml-build/src/SFML/System/cmake_install.cmake")
-  include("D:/school vibes/T1 - 2025-2026/STDISCM/SFML/thirdparty/sfml-build/src/SFML/Main/cmake_install.cmake")
-  include("D:/school vibes/T1 - 2025-2026/STDISCM/SFML/thirdparty/sfml-build/src/SFML/Window/cmake_install.cmake")
-  include("D:/school vibes/T1 - 2025-2026/STDISCM/SFML/thirdparty/sfml-build/src/SFML/Network/cmake_install.cmake")
-  include("D:/school vibes/T1 - 2025-2026/STDISCM/SFML/thirdparty/sfml-build/src/SFML/Graphics/cmake_install.cmake")
-  include("D:/school vibes/T1 - 2025-2026/STDISCM/SFML/thirdparty/sfml-build/src/SFML/Audio/cmake_install.cmake")
+  include("C:/Users/josh/Documents/SCHOOL/STDISCM/P2/thirdparty/sfml-build/src/SFML/System/cmake_install.cmake")
+  include("C:/Users/josh/Documents/SCHOOL/STDISCM/P2/thirdparty/sfml-build/src/SFML/Main/cmake_install.cmake")
+  include("C:/Users/josh/Documents/SCHOOL/STDISCM/P2/thirdparty/sfml-build/src/SFML/Window/cmake_install.cmake")
+  include("C:/Users/josh/Documents/SCHOOL/STDISCM/P2/thirdparty/sfml-build/src/SFML/Network/cmake_install.cmake")
+  include("C:/Users/josh/Documents/SCHOOL/STDISCM/P2/thirdparty/sfml-build/src/SFML/Graphics/cmake_install.cmake")
+  include("C:/Users/josh/Documents/SCHOOL/STDISCM/P2/thirdparty/sfml-build/src/SFML/Audio/cmake_install.cmake")
 
 endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
 if(CMAKE_INSTALL_LOCAL_ONLY)
-  file(WRITE "D:/school vibes/T1 - 2025-2026/STDISCM/SFML/thirdparty/sfml-build/src/SFML/install_local_manifest.txt"
+  file(WRITE "C:/Users/josh/Documents/SCHOOL/STDISCM/P2/thirdparty/sfml-build/src/SFML/install_local_manifest.txt"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
 endif()

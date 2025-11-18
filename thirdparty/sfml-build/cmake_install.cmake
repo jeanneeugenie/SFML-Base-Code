@@ -1,8 +1,8 @@
-# Install script for directory: D:/school vibes/T1 - 2025-2026/STDISCM/SFML/thirdparty/sfml-src
+# Install script for directory: C:/Users/josh/Documents/SCHOOL/STDISCM/P2/thirdparty/sfml-src
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "D:/school vibes/T1 - 2025-2026/STDISCM/SFML/out/install/x64-debug")
+  set(CMAKE_INSTALL_PREFIX "C:/Users/josh/Documents/SCHOOL/STDISCM/P2/out/install/x64-debug")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -33,34 +33,34 @@ if(NOT DEFINED CMAKE_CROSSCOMPILING)
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "devel" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/." TYPE DIRECTORY FILES "D:/school vibes/T1 - 2025-2026/STDISCM/SFML/thirdparty/sfml-src/include" FILES_MATCHING REGEX "/[^/]*\\.hpp$" REGEX "/[^/]*\\.inl$")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/." TYPE DIRECTORY FILES "C:/Users/josh/Documents/SCHOOL/STDISCM/P2/thirdparty/sfml-src/include" FILES_MATCHING REGEX "/[^/]*\\.hpp$" REGEX "/[^/]*\\.inl$")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "devel" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/." TYPE DIRECTORY FILES "D:/school vibes/T1 - 2025-2026/STDISCM/SFML/thirdparty/sfml-build/lib" FILES_MATCHING REGEX "/[^/]*\\.pdb$")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/." TYPE DIRECTORY FILES "C:/Users/josh/Documents/SCHOOL/STDISCM/P2/thirdparty/sfml-build/lib" FILES_MATCHING REGEX "/[^/]*\\.pdb$")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/doc/SFML" TYPE FILE FILES "D:/school vibes/T1 - 2025-2026/STDISCM/SFML/thirdparty/sfml-src/license.md")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/doc/SFML" TYPE FILE FILES "C:/Users/josh/Documents/SCHOOL/STDISCM/P2/thirdparty/sfml-src/license.md")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/doc/SFML" TYPE FILE FILES "D:/school vibes/T1 - 2025-2026/STDISCM/SFML/thirdparty/sfml-src/readme.md")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/doc/SFML" TYPE FILE FILES "C:/Users/josh/Documents/SCHOOL/STDISCM/P2/thirdparty/sfml-src/readme.md")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/bin" TYPE DIRECTORY FILES "D:/school vibes/T1 - 2025-2026/STDISCM/SFML/thirdparty/sfml-src/extlibs/bin/x64/")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/bin" TYPE DIRECTORY FILES "C:/Users/josh/Documents/SCHOOL/STDISCM/P2/thirdparty/sfml-src/extlibs/bin/x64/")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE DIRECTORY FILES "D:/school vibes/T1 - 2025-2026/STDISCM/SFML/thirdparty/sfml-src/extlibs/libs-msvc-universal/x64/")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE DIRECTORY FILES "C:/Users/josh/Documents/SCHOOL/STDISCM/P2/thirdparty/sfml-src/extlibs/libs-msvc-universal/x64/")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
   if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/cmake/SFML/SFMLSharedTargets.cmake")
     file(DIFFERENT _cmake_export_file_changed FILES
          "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/cmake/SFML/SFMLSharedTargets.cmake"
-         "D:/school vibes/T1 - 2025-2026/STDISCM/SFML/thirdparty/sfml-build/CMakeFiles/Export/3937c6824958577f216dad0a66bc6149/SFMLSharedTargets.cmake")
+         "C:/Users/josh/Documents/SCHOOL/STDISCM/P2/thirdparty/sfml-build/CMakeFiles/Export/3937c6824958577f216dad0a66bc6149/SFMLSharedTargets.cmake")
     if(_cmake_export_file_changed)
       file(GLOB _cmake_old_config_files "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/cmake/SFML/SFMLSharedTargets-*.cmake")
       if(_cmake_old_config_files)
@@ -73,29 +73,29 @@ if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT
     endif()
     unset(_cmake_export_file_changed)
   endif()
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/SFML" TYPE FILE FILES "D:/school vibes/T1 - 2025-2026/STDISCM/SFML/thirdparty/sfml-build/CMakeFiles/Export/3937c6824958577f216dad0a66bc6149/SFMLSharedTargets.cmake")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/SFML" TYPE FILE FILES "C:/Users/josh/Documents/SCHOOL/STDISCM/P2/thirdparty/sfml-build/CMakeFiles/Export/3937c6824958577f216dad0a66bc6149/SFMLSharedTargets.cmake")
   if(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Dd][Ee][Bb][Uu][Gg])$")
-    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/SFML" TYPE FILE FILES "D:/school vibes/T1 - 2025-2026/STDISCM/SFML/thirdparty/sfml-build/CMakeFiles/Export/3937c6824958577f216dad0a66bc6149/SFMLSharedTargets-debug.cmake")
+    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/SFML" TYPE FILE FILES "C:/Users/josh/Documents/SCHOOL/STDISCM/P2/thirdparty/sfml-build/CMakeFiles/Export/3937c6824958577f216dad0a66bc6149/SFMLSharedTargets-debug.cmake")
   endif()
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "devel" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/SFML" TYPE FILE FILES
-    "D:/school vibes/T1 - 2025-2026/STDISCM/SFML/thirdparty/sfml-build/SFMLConfig.cmake"
-    "D:/school vibes/T1 - 2025-2026/STDISCM/SFML/thirdparty/sfml-build/SFMLConfigDependencies.cmake"
-    "D:/school vibes/T1 - 2025-2026/STDISCM/SFML/thirdparty/sfml-build/SFMLConfigVersion.cmake"
+    "C:/Users/josh/Documents/SCHOOL/STDISCM/P2/thirdparty/sfml-build/SFMLConfig.cmake"
+    "C:/Users/josh/Documents/SCHOOL/STDISCM/P2/thirdparty/sfml-build/SFMLConfigDependencies.cmake"
+    "C:/Users/josh/Documents/SCHOOL/STDISCM/P2/thirdparty/sfml-build/SFMLConfigVersion.cmake"
     )
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("D:/school vibes/T1 - 2025-2026/STDISCM/SFML/thirdparty/sfml-build/src/SFML/cmake_install.cmake")
+  include("C:/Users/josh/Documents/SCHOOL/STDISCM/P2/thirdparty/sfml-build/src/SFML/cmake_install.cmake")
 
 endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
 if(CMAKE_INSTALL_LOCAL_ONLY)
-  file(WRITE "D:/school vibes/T1 - 2025-2026/STDISCM/SFML/thirdparty/sfml-build/install_local_manifest.txt"
+  file(WRITE "C:/Users/josh/Documents/SCHOOL/STDISCM/P2/thirdparty/sfml-build/install_local_manifest.txt"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
 endif()

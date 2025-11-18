@@ -3,9 +3,9 @@
 # No other meaning or use of this file is supported.
 
 method=git
-command=C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/bin/cmake.exe;-DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE;-P;D:/school vibes/T1 - 2025-2026/STDISCM/SFML/thirdparty/sfml-subbuild/sfml-populate-prefix/tmp/sfml-populate-gitclone.cmake
-source_dir=D:/school vibes/T1 - 2025-2026/STDISCM/SFML/thirdparty/sfml-src
-work_dir=D:/school vibes/T1 - 2025-2026/STDISCM/SFML/thirdparty
+command=C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/bin/cmake.exe;-DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE;-P;C:/Users/josh/Documents/SCHOOL/STDISCM/P2/thirdparty/sfml-subbuild/sfml-populate-prefix/tmp/sfml-populate-gitclone.cmake
+source_dir=C:/Users/josh/Documents/SCHOOL/STDISCM/P2/thirdparty/sfml-src
+work_dir=C:/Users/josh/Documents/SCHOOL/STDISCM/P2/thirdparty
 repository=https://github.com/SFML/SFML.git
 remote=origin
 init_submodules=TRUE

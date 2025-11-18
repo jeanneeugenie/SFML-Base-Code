@@ -1,8 +1,8 @@
-# Install script for directory: D:/school vibes/T1 - 2025-2026/STDISCM/SFML/thirdparty/sfml-src/src/SFML/Network
+# Install script for directory: C:/Users/josh/Documents/SCHOOL/STDISCM/P2/thirdparty/sfml-src/src/SFML/Network
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "D:/school vibes/T1 - 2025-2026/STDISCM/SFML/out/install/x64-debug")
+  set(CMAKE_INSTALL_PREFIX "C:/Users/josh/Documents/SCHOOL/STDISCM/P2/out/install/x64-debug")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -33,16 +33,16 @@ if(NOT DEFINED CMAKE_CROSSCOMPILING)
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "devel" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY OPTIONAL FILES "D:/school vibes/T1 - 2025-2026/STDISCM/SFML/thirdparty/sfml-build/lib/sfml-network-d.lib")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY OPTIONAL FILES "C:/Users/josh/Documents/SCHOOL/STDISCM/P2/thirdparty/sfml-build/lib/sfml-network-d.lib")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "bin" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/bin" TYPE SHARED_LIBRARY FILES "D:/school vibes/T1 - 2025-2026/STDISCM/SFML/out/build/x64-debug/bin/sfml-network-d-2.dll")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/bin" TYPE SHARED_LIBRARY FILES "C:/Users/josh/Documents/SCHOOL/STDISCM/P2/out/build/x64-debug/bin/sfml-network-d-2.dll")
 endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
 if(CMAKE_INSTALL_LOCAL_ONLY)
-  file(WRITE "D:/school vibes/T1 - 2025-2026/STDISCM/SFML/thirdparty/sfml-build/src/SFML/Network/install_local_manifest.txt"
+  file(WRITE "C:/Users/josh/Documents/SCHOOL/STDISCM/P2/thirdparty/sfml-build/src/SFML/Network/install_local_manifest.txt"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
 endif()

@@ -1,4 +1,4 @@
-#line 1 "D:\\school vibes\\T1 - 2025-2026\\STDISCM\\SFML\\thirdparty\\sfml-build\\src\\SFML\\Window\\sfml-window.rc"
+#line 1 "C:\\Users\\josh\\Documents\\SCHOOL\\STDISCM\\P2\\thirdparty\\sfml-build\\src\\SFML\\Window\\sfml-window.rc"
 #line 1 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.26100.0\\um\\winresrc.h"
 
 
@@ -8770,7 +8770,7 @@
 #line 42 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.26100.0\\um\\winresrc.h"
 
 #line 44 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.26100.0\\um\\winresrc.h"
-#line 2 "D:\\school vibes\\T1 - 2025-2026\\STDISCM\\SFML\\thirdparty\\sfml-build\\src\\SFML\\Window\\sfml-window.rc"
+#line 2 "C:\\Users\\josh\\Documents\\SCHOOL\\STDISCM\\P2\\thirdparty\\sfml-build\\src\\SFML\\Window\\sfml-window.rc"
 
 
 
@@ -8789,19 +8789,19 @@
 
 
 
-#line 21 "D:\\school vibes\\T1 - 2025-2026\\STDISCM\\SFML\\thirdparty\\sfml-build\\src\\SFML\\Window\\sfml-window.rc"
+#line 21 "C:\\Users\\josh\\Documents\\SCHOOL\\STDISCM\\P2\\thirdparty\\sfml-build\\src\\SFML\\Window\\sfml-window.rc"
 
 
 
-#line 25 "D:\\school vibes\\T1 - 2025-2026\\STDISCM\\SFML\\thirdparty\\sfml-build\\src\\SFML\\Window\\sfml-window.rc"
+#line 25 "C:\\Users\\josh\\Documents\\SCHOOL\\STDISCM\\P2\\thirdparty\\sfml-build\\src\\SFML\\Window\\sfml-window.rc"
     
-#line 27 "D:\\school vibes\\T1 - 2025-2026\\STDISCM\\SFML\\thirdparty\\sfml-build\\src\\SFML\\Window\\sfml-window.rc"
+#line 27 "C:\\Users\\josh\\Documents\\SCHOOL\\STDISCM\\P2\\thirdparty\\sfml-build\\src\\SFML\\Window\\sfml-window.rc"
 
 
     
 
 
-#line 33 "D:\\school vibes\\T1 - 2025-2026\\STDISCM\\SFML\\thirdparty\\sfml-build\\src\\SFML\\Window\\sfml-window.rc"
+#line 33 "C:\\Users\\josh\\Documents\\SCHOOL\\STDISCM\\P2\\thirdparty\\sfml-build\\src\\SFML\\Window\\sfml-window.rc"
 
 1 VERSIONINFO
 FILEVERSION     2,6,2,0

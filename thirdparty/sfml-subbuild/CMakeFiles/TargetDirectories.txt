@@ -1,3 +1,3 @@
-D:/school vibes/T1 - 2025-2026/STDISCM/SFML/thirdparty/sfml-subbuild/CMakeFiles/sfml-populate.dir
-D:/school vibes/T1 - 2025-2026/STDISCM/SFML/thirdparty/sfml-subbuild/CMakeFiles/edit_cache.dir
-D:/school vibes/T1 - 2025-2026/STDISCM/SFML/thirdparty/sfml-subbuild/CMakeFiles/rebuild_cache.dir
+C:/Users/josh/Documents/SCHOOL/STDISCM/P2/thirdparty/sfml-subbuild/CMakeFiles/sfml-populate.dir
+C:/Users/josh/Documents/SCHOOL/STDISCM/P2/thirdparty/sfml-subbuild/CMakeFiles/edit_cache.dir
+C:/Users/josh/Documents/SCHOOL/STDISCM/P2/thirdparty/sfml-subbuild/CMakeFiles/rebuild_cache.dir
