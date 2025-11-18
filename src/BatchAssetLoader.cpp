@@ -52,6 +52,9 @@ void BatchAssetLoader::schedule_batch(int n) {
     for (int i = submitted_; i < end; ++i) {
         std::string full = paths_[i];
         pool_.enqueue([this, full, currentBatch, demoDelay = demoDelayMs(rng)] {
+            // Mark a job as in-flight
+            inFlight_.fetch_add(1, std::memory_order_relaxed);
+
             // --- demo-only delay; REMOVE for real benchmarks if desired ---
             std::this_thread::sleep_for(std::chrono::milliseconds(demoDelay));
             // ---------------------------------------------------------------
@@ -71,6 +74,9 @@ void BatchAssetLoader::schedule_batch(int n) {
             else {
                 std::cerr << "[Worker] Failed to load " << full << "\n";
             }
+
+            // Job finished
+            inFlight_.fetch_sub(1, std::memory_order_relaxed);
             });
     }
     submitted_ = end;
@@ -102,6 +108,7 @@ void BatchAssetLoader::update() {
  * ----------------
  * Main-thread: upload limited number of textures to GPU per frame.
  * Notifies UI via onUpload_ with the batchId of each uploaded item.
+ * Also increments uploadedCount_ so UI can display progress/percentage.
  */
 int BatchAssetLoader::drainToTextures(int maxUploadsPerFrame) {
     int uploaded = 0;
@@ -112,6 +119,9 @@ int BatchAssetLoader::drainToTextures(int maxUploadsPerFrame) {
 
         sink_->createTextureFromImage(*maybe);
 
+        // increment uploaded counter (main thread)
+        uploadedCount_.fetch_add(1, std::memory_order_relaxed);
+
         if (onUpload_) onUpload_(maybe->batchId);   // NEW: notify UI/overlay
 
         ++uploaded;
@@ -119,4 +129,39 @@ int BatchAssetLoader::drainToTextures(int maxUploadsPerFrame) {
             << " (batch " << maybe->batchId << ")\n";
     }
     return uploaded;
+}
+
+/* Status helpers */
+
+bool BatchAssetLoader::isFinished() const {
+    // finished when all jobs were scheduled, no decoded images are pending, and no workers are actively decoding
+    return (submitted_ >= (int)paths_.size()) && (ready_.size() == 0) && (inFlight_.load(std::memory_order_relaxed) == 0);
+}
+
+int BatchAssetLoader::getSubmitted() const {
+    return submitted_;
+}
+
+int BatchAssetLoader::getTotal() const {
+    return static_cast<int>(paths_.size());
+}
+
+size_t BatchAssetLoader::getReadyCount() const {
+    return ready_.size();
+}
+
+int BatchAssetLoader::getInFlight() const {
+    return inFlight_.load(std::memory_order_relaxed);
+}
+
+/* NEW: uploaded counter accessors */
+
+int BatchAssetLoader::getUploaded() const {
+    return uploadedCount_.load(std::memory_order_relaxed);
+}
+
+float BatchAssetLoader::getUploadedPercent() const {
+    int total = getTotal();
+    if (total <= 0) return 100.0f;
+    return (static_cast<float>(getUploaded()) / static_cast<float>(total)) * 100.0f;
 }

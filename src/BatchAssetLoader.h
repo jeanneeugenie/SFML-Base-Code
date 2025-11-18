@@ -4,6 +4,7 @@
 #include <vector>
 #include <chrono>
 #include <functional>
+#include <atomic>
 #include "ThreadPool.h"
 #include "ConcurrentQueue.h"
 
@@ -41,6 +42,17 @@ public:
     // Optional: observer for UI or logging when uploads happen
     void setOnUpload(std::function<void(int batchId)> cb) { onUpload_ = std::move(cb); }
 
+    // Status helpers for UI
+    bool isFinished() const;
+    int  getSubmitted() const;
+    int  getTotal() const;
+    size_t getReadyCount() const;
+    int  getInFlight() const;
+
+    // NEW: uploaded counter and helpers (incremented on each successful drain/upload)
+    int  getUploaded() const;
+    float getUploadedPercent() const; // 0..100
+
 private:
     void schedule_batch(int n);
 
@@ -58,4 +70,10 @@ private:
     // NEW: batch bookkeeping
     int                           nextBatchId_ = 0;
     std::function<void(int)>      onUpload_; // called per uploaded item (passes batchId)
+
+    // NEW: track worker jobs currently decoding (worker-side)
+    std::atomic<int>              inFlight_{0};
+
+    // NEW: number of items uploaded to GPU (incremented from main thread inside drainToTextures)
+    std::atomic<int>              uploadedCount_{0};
 };
