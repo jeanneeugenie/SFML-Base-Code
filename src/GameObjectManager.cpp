@@ -1,6 +1,7 @@
 #include <stddef.h>
 #include "GameObjectManager.h"
 #include <iostream>
+#include <algorithm>
 
 GameObjectManager* GameObjectManager::sharedInstance = NULL;
 
@@ -50,8 +51,14 @@ void GameObjectManager::update(sf::Time deltaTime)
 
 //draws the object if it contains a sprite
 void GameObjectManager::draw(sf::RenderWindow* window) {
-	for (int i = 0; i < this->gameObjectList.size(); i++) {
-		this->gameObjectList[i]->draw(window);
+	// Sort a copy of the list by zOrder, then draw in that order.
+	std::vector<AGameObject*> ordered = this->gameObjectList;
+	std::sort(ordered.begin(), ordered.end(), [](AGameObject* a, AGameObject* b) {
+		return a->getZOrder() < b->getZOrder();
+	});
+
+	for (int i = 0; i < ordered.size(); i++) {
+		ordered[i]->draw(window);
 	}
 }
 

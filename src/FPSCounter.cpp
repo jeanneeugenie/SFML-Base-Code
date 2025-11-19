@@ -20,6 +20,9 @@ FPSCounter::~FPSCounter()
 
 void FPSCounter::initialize()
 {
+    // set high z so FPS displays above overlays
+    this->setZOrder(200);
+
     // load font once
     sf::Font* font = new sf::Font();
     if (!font->loadFromFile("Media/Sansation.ttf")) {

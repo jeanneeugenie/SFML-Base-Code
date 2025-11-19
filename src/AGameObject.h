@@ -31,6 +31,10 @@ public:
 
     String getName();
 
+    // z-order for rendering. Higher z means drawn later (on top).
+    void setZOrder(int z) { zOrder = z; }
+    int getZOrder() const { return zOrder; }
+
 protected:
     String       name;
     sf::Sprite* sprite = new sf::Sprite();
@@ -38,4 +42,6 @@ protected:
 
     float posX = 0.0f, posY = 0.0f;
     float scaleX = 1.0f, scaleY = 1.0f;
+
+    int zOrder = 0; // default layer
 };

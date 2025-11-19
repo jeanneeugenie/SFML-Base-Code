@@ -26,6 +26,9 @@ public:
 	sf::Texture* getStreamTextureFromList(const int index);
 	int getNumLoadedStreamTextures() const;
 
+	void loadGIF();
+	TextureList gifHolder;
+
 private:
 	TextureManager();
 	TextureManager(TextureManager const&) {};             // copy constructor is private
@@ -35,6 +38,7 @@ private:
 	HashTable textureMap;
 	TextureList baseTextureList;
 	TextureList streamTextureList;
+	
 
 	const std::string STREAMING_PATH = "Media/Streaming/";
 	int streamingAssetCount = 0;

@@ -124,6 +124,21 @@ void TextureManager::instantiateAsTexture(String path, String assetName, bool is
 	else             this->baseTextureList.push_back(texture);
 }
 
+void TextureManager::loadGIF()
+{
+	std::string path = "Media/UI/fou.png";
+	std::string assetName = "LoadingGIF";
+	sf::Texture* texture = new sf::Texture();
+	texture->loadFromFile(path);
+	this->gifHolder.push_back(texture);
+	if (!this->gifHolder.empty()) {
+		std::cout << "Picture found" << std::endl;
+	}
+	else {
+		std::cout << "[TextureManager] No texture found for " << assetName << std::endl;
+	}
+}
+
 /*
  * Called by TextureSink on the main thread to create a GPU texture
  * from an sf::Image decoded on a background thread.
