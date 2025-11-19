@@ -100,6 +100,19 @@ BaseRunner::BaseRunner() :
     g_loadingOverlay = new LoadingOverlay(g_loader.get(), &g_toastFont);
     GameObjectManager::getInstance()->addObject(g_loadingOverlay);
 
+    // Provide some example tips and set rotation to 5s
+    std::vector<std::string> tips = {
+        "How does one survive college?",
+        "Tip: Don't cram!",
+        "Invest on a jacket..",
+        "Pro tip: Start while ahead and get things done!",
+        "Hint: College isn't a fashion show.",
+        "The first few months are always the easiest..",
+        ".. and it never gets easier after that."
+    };
+    g_loadingOverlay->setTips(tips);
+    g_loadingOverlay->setTipIntervalSeconds(5.f);
+
     std::cout << "[BaseRunner] Streaming files: " << streamingFiles.size() << "\n";
 }
 
